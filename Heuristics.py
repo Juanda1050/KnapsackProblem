@@ -1,73 +1,35 @@
 # Menu Function for print the menu of choices to solve the KP instance
 import os
+from pathlib import Path
 
 
-def menu():
-    menu_log = """
-    Knapsack problem Heuristic menu
-    Choose which heuristic want to use to resolve the KP
-    
-    1. Heuristic (1)
-    2. Heuristic (2)
-    3. Heuristic (3)
-    
-    """
-    print(menu_log)
-    option = int(input("Option: "))
-    return option
+def instanceReader():
 
-
-# Function for create a switch case option to choose the heuristic
-def instanceReader(option):
-    # This is the path where Python searches for instances
-    path = "instances/"
-
-    dir = os.listdir(path)
+    dir_path_file = "instances/"
+    dir_path = os.listdir(dir_path_file)
 
     # Loop to print all the instances available
-    for file in range(len(dir)):
-        print(dir[file])
+    for file in range(len(dir_path)):
+        print(dir_path[file])
 
     file_option = int(input("Which file would you like to open?: "))
 
-    check = False
+    # This is the path where Python searches for instances
+    path_to_file = "instances/output_" + str(file_option) + ".txt"
+    path = Path(path_to_file)
 
-    if not check:
-        check = os.path.isfile("instances/output_" + str(file_option) + ".txt")
-        print(check)
+    if path.is_file():
+        print(f'The file {path_to_file} exist')
+    else:
+        print(f'The file {path_to_file} does not exist')
+        instanceReader()
 
     try:
         with open("instances/output_" + str(file_option) + ".txt") as instance:
             content = instance.read()
             print(content)
     except IOError:
-        print("Can't access to the file")
-
-
-def heuristicSwitcher(option):
-    switcher = {
-        1: heuristicOne,
-        2: heuristicTwo,
-        3: heuristicThree
-    }
-    # Get the function form switcher dictionary
-    heuristic_option = switcher.get(option, "Invalid heuristic")
-
-    # Execute the function
-    return heuristic_option()
-
-
-def heuristicOne():
-    print("Heuristic 1")
-
-
-def heuristicTwo():
-    print("Heuristic 2")
-
-
-def heuristicThree():
-    print("Heuristic 3")
-
+        print(f'Can not access to {path_to_file}')
 
 if __name__ == '__main__':
-    menu()
+    instanceReader()
