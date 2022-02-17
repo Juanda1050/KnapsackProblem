@@ -14,16 +14,13 @@ def menu():
     """
     print(menu_log)
     option = int(input("Option: "))
-    heuristicSwitch(option)
+    return option
 
 
 # Function for create a switch case option to choose the heuristic
-def heuristicSwitch(option):
+def instanceReader(option):
     # This is the path where Python searches for instances
     path = "instances/"
-
-    # Create a list to store a files in a list
-    is_file = os.path.isfile(path)
 
     dir = os.listdir(path)
 
@@ -33,8 +30,11 @@ def heuristicSwitch(option):
 
     file_option = int(input("Which file would you like to open?: "))
 
-    check = os.path.isfile("instances/output_" + str(file_option) + ".txt")
-    print(check)
+    check = False
+
+    if not check:
+        check = os.path.isfile("instances/output_" + str(file_option) + ".txt")
+        print(check)
 
     try:
         with open("instances/output_" + str(file_option) + ".txt") as instance:
@@ -43,10 +43,8 @@ def heuristicSwitch(option):
     except IOError:
         print("Can't access to the file")
 
-    while not check:
-        menu()
 
-
+def heuristicSwitcher(option):
     switcher = {
         1: heuristicOne,
         2: heuristicTwo,
@@ -69,13 +67,6 @@ def heuristicTwo():
 
 def heuristicThree():
     print("Heuristic 3")
-
-
-def clearConsole():
-    command = 'clear'
-    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
-        command = 'cls'
-    os.system(command)
 
 
 if __name__ == '__main__':
