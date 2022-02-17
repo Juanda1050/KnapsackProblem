@@ -1,5 +1,6 @@
 # Menu Function for print the menu of choices to solve the KP instance
 import os
+import sys
 from pathlib import Path
 
 
@@ -18,18 +19,20 @@ def instanceReader():
     path_to_file = "instances/output_" + str(file_option) + ".txt"
     path = Path(path_to_file)
 
-    if path.is_file():
-        print(f'The file {path_to_file} exist')
-    else:
-        print(f'The file {path_to_file} does not exist')
-        instanceReader()
-
     try:
         with open("instances/output_" + str(file_option) + ".txt") as instance:
             content = instance.read()
             print(content)
     except IOError:
         print(f'Can not access to {path_to_file}')
+    finally:
+        print("Terminating process")
+
+    if path.is_file():
+        print(f'The file {path_to_file} exist')
+    else:
+        print(f'The file {path_to_file} does not exist')
+        instanceReader()
 
 if __name__ == '__main__':
     instanceReader()
