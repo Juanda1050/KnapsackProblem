@@ -6,7 +6,7 @@ import time
 start_time_program = time.time()
 
 
-def heuristicMenu():
+def heuristicMenu(result, W):
     menu_log = """
         Knapsack problem Heuristic menu
         Choose which heuristic want to use to resolve the KP
@@ -20,13 +20,13 @@ def heuristicMenu():
     while True:
         option = int(input("Option: "))
         if option == 1:
-            heuristicOne()
+            heuristicOne(result, W)
             break
         elif option == 2:
-            heuristicTwo()
+            heuristicTwo(result, W)
             break
         elif option == 3:
-            heuristicThree()
+            heuristicThree(result, W)
             break
         else:
             print("Option does not exist")
@@ -60,32 +60,80 @@ def instanceReader():
             print(f'The file {path_to_file} does not exist')
             continue
 
+    result = []
+
     try:
         instance = open(path_to_file, 'r')
-        result = []
+        first_line = instance.readline().split()
+        W = int(first_line[1])
         for line in instance.readlines():
             result.append([int(x) for x in line.split(' ')])
-        result.sort(key = lambda x: x[0])
-        print(result)
     except IOError:
         print(f'Can not access to {path_to_file}')
     finally:
         print("Reading process conclude")
 
-    heuristicMenu()
+    heuristicMenu(result, W)
 
 
-def heuristicOne():
-
+def heuristicOne(result, W):
     print("Heuristic 1")
+    result.sort(key=lambda x: -x[0])
+    #print(result)
+
+    sum_values = 0
+    sum_weights = 0
+    for i in range(len(result)):
+        if sum_weights + result[i][1] <= W:
+            sum_weights += result[i][1]
+            sum_values += result[i][0]
+
+    print("Objective function: " + str(sum_values))
+    print("Total weight in the knapsack: " + str(sum_weights))
+    print("Residual: " + str(W - sum_weights))
+    print("Execution time: " + str(round(time.time() - start_time_program)) + "s")
 
 
-def heuristicTwo():
+def heuristicTwo(result, W):
     print("Heuristic 2")
+    result.sort(key=lambda x: x[1])
+    #print(result)
+
+    sum_values = 0
+    sum_weights = 0
+    for i in range(len(result)):
+        if sum_weights + result[i][1] <= W:
+            sum_weights += result[i][1]
+            sum_values += result[i][0]
+
+    print("Objective function: " + str(sum_values))
+    print("Total weight in the knapsack: " + str(sum_weights))
+    print("Residual: " + str(W - sum_weights))
+    print("Execution time: " + str(round(time.time() - start_time_program)) + "s")
 
 
-def heuristicThree():
+def heuristicThree(result, W):
     print("Heuristic 3")
+
+    for line in range(len(result)):
+        v = result[line][0]
+        w = result[line][1]
+        result[line].append(v/w)
+
+    result.sort(key=lambda x: -x[2])
+    #print(result)
+
+    sum_values = 0
+    sum_weights = 0
+    for i in range(len(result)):
+        if sum_weights + result[i][1] <= W:
+            sum_weights += result[i][1]
+            sum_values += result[i][0]
+
+    print("Objective function: " + str(sum_values))
+    print("Total weight in the knapsack: " + str(sum_weights))
+    print("Residual: " + str(W - sum_weights))
+    print("Execution time: " + str(round(time.time() - start_time_program)) + "s")
 
 
 if __name__ == '__main__':
