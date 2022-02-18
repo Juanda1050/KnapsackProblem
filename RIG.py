@@ -19,7 +19,7 @@ def instanceGenerator(k):
             v_max = int(input("Enter the maximum value of the objects for instance No." + str(fileNumber + 1) + ": "))
             w_min = int(input("Enter the minimum weight of the objects for instance No." + str(fileNumber + 1) + ": "))
             w_max = int(input("Enter the maximum weight of the objects for instance No." + str(fileNumber + 1) + ": "))
-            W = ((n * (w_max + w_min) / 2) * 0.3)
+            W = int(((n * (w_max + w_min) / 2) * 0.3))
 
             # Method for create and write a txt file
             with open("instances/output_" + str(fileNumber + 1) + ".txt", "w+") as instance:
