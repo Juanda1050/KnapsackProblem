@@ -7,6 +7,7 @@ start_time_program = time.time()
 
 
 def heuristicMenu(result, W):
+    print('\033[H\033[J', end='')
     menu_log = """
         Knapsack problem Heuristic menu
         Choose which heuristic want to use to resolve the KP
@@ -34,6 +35,7 @@ def heuristicMenu(result, W):
 
 
 def instanceReader():
+    print('\033[H\033[J', end='')
     menu_log = """
             Knapsack problem Instance menu
             Choose which instance you will use
@@ -134,6 +136,9 @@ def heuristicThree(result, W):
     print("Total weight in the knapsack: " + str(sum_weights))
     print("Residual: " + str(W - sum_weights))
     print("Execution time: " + str(round(time.time() - start_time_program)) + "s")
+
+def objectiveFuction():
+    print("Objective Function")
 
 
 if __name__ == '__main__':

@@ -39,6 +39,17 @@ def instanceGenerator(k):
         print("The text file directory does not exist")
 
 
+# Function for validate all the inputs in the RIG
+def getInput(prompt = "", cast = None, condition = None, errorMessage = None):
+    while True:
+        try:
+            response = (cast or str)(input(prompt))
+            assert condition is None or condition(response)
+            return response
+        except:
+            print(errorMessage or "Invalid input. Try again.")
+
+
 # Run main function
 if __name__ == '__main__':
     main()
