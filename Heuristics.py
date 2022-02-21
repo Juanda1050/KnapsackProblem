@@ -6,6 +6,7 @@ import time
 # Variable for clear console
 clean_console = '\033[H\033[J'
 
+
 # Function to print the Heuristics Menu 
 def heuristicMenu(result, W):
 
@@ -37,6 +38,7 @@ def heuristicMenu(result, W):
         else:
             print("Option does not exist")
             continue
+
 
 # Function for read the instance file selected by the user
 def instanceReader():
@@ -94,7 +96,7 @@ def instanceReader():
 
 # Function for Heuristic One
 def heuristicOne(result, W):
-    print("Heuristic 1")
+    print("\nHeuristic 1")
 
     # Variable for get the time take it of each heuristic
     solve_time_heuristic = time.time()
@@ -108,7 +110,7 @@ def heuristicOne(result, W):
 
 # Function for Heuristic Two
 def heuristicTwo(result, W):
-    print("Heuristic 2")
+    print("\nHeuristic 2")
 
     # Variable for get the time take it of each heuristic
     solve_time_heuristic = time.time()
@@ -122,7 +124,7 @@ def heuristicTwo(result, W):
 
 # Function for Heuristic Three
 def heuristicThree(result, W):
-    print("Heuristic 3")
+    print("\nHeuristic 3")
 
     # Variable for get the time take it of each heuristic
     solve_time_heuristic = time.time() 
@@ -146,15 +148,18 @@ def objectiveFuction(result, W, solve_time_heuristic):
     # Initialize variable to get the sum of values and sum of weights (objective function)
     sum_values = 0
     sum_weights = 0
+    objects = 0
 
     # Loop to store the items into the knapsack
     for i in range(len(result)):
         if sum_weights + result[i][1] <= W:
             sum_weights += result[i][1]
             sum_values += result[i][0]
+            objects = objects + 1
 
     # Print the results of each heuristic
-    print("Total of items: " + str(i + 1))
+    print("Total of items in the instance:", str(i + 1))
+    print("Total of items in the knapsack: " + str(objects))
     print("Objective function: " + str(sum_values))
     print("Total weight in the knapsack: " + str(sum_weights))
     print("Residual: " + str(W - sum_weights))
