@@ -35,12 +35,18 @@ def heuristicMenu(result, W):
 
 
 def instanceReader():
+
+    # Print to clean the command prompt
     print('\033[H\033[J', end='')
+
+    # Variable to print the Menu of Heuristics
     menu_log = """
             Knapsack problem Instance menu
             Choose which instance you will use
             """
     print(menu_log)
+
+    # Variables to declare the route where are the output instances
     dir_path_file = "instances/"
     dir_path = os.listdir(dir_path_file)
 
@@ -78,45 +84,29 @@ def instanceReader():
     heuristicMenu(result, W)
 
 
+# Function for Heuristic One
 def heuristicOne(result, W):
     print("Heuristic 1")
     result.sort(key=lambda x: -x[0])
     #print(result)
 
-    sum_values = 0
-    sum_weights = 0
-    for i in range(len(result)):
-        if sum_weights + result[i][1] <= W:
-            sum_weights += result[i][1]
-            sum_values += result[i][0]
-
-    print("Objective function: " + str(sum_values))
-    print("Total weight in the knapsack: " + str(sum_weights))
-    print("Residual: " + str(W - sum_weights))
-    print("Execution time: " + str(round(time.time() - start_time_program)) + "s")
+    objectiveFuction(result, W)
 
 
+# Function for Heuristic Two
 def heuristicTwo(result, W):
     print("Heuristic 2")
     result.sort(key=lambda x: x[1])
     #print(result)
 
-    sum_values = 0
-    sum_weights = 0
-    for i in range(len(result)):
-        if sum_weights + result[i][1] <= W:
-            sum_weights += result[i][1]
-            sum_values += result[i][0]
-
-    print("Objective function: " + str(sum_values))
-    print("Total weight in the knapsack: " + str(sum_weights))
-    print("Residual: " + str(W - sum_weights))
-    print("Execution time: " + str(round(time.time() - start_time_program)) + "s")
+    objectiveFuction(result, W)
 
 
+# Function for Heuristic Three
 def heuristicThree(result, W):
     print("Heuristic 3")
 
+    # Loop to obtain r
     for line in range(len(result)):
         v = result[line][0]
         w = result[line][1]
@@ -125,6 +115,12 @@ def heuristicThree(result, W):
     result.sort(key=lambda x: -x[2])
     #print(result)
 
+    objectiveFuction(result, W)
+
+
+# Function to solve the Heuristic and call it in every Heuristic function to get the objective function
+def objectiveFuction(result, W):
+    print("Objective Function")
     sum_values = 0
     sum_weights = 0
     for i in range(len(result)):
@@ -136,9 +132,6 @@ def heuristicThree(result, W):
     print("Total weight in the knapsack: " + str(sum_weights))
     print("Residual: " + str(W - sum_weights))
     print("Execution time: " + str(round(time.time() - start_time_program)) + "s")
-
-def objectiveFuction(result, W):
-    print("Objective Function")
 
 
 if __name__ == '__main__':
