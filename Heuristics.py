@@ -137,7 +137,7 @@ def heuristicThree(result, W):
     print("Residual: " + str(W - sum_weights))
     print("Execution time: " + str(round(time.time() - start_time_program)) + "s")
 
-def objectiveFuction():
+def objectiveFuction(result, W):
     print("Objective Function")
 
 

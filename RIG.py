@@ -1,3 +1,4 @@
+from ctypes import cast
 import random
 
 
@@ -14,11 +15,26 @@ def instanceGenerator(k):
 
         # Loop with the amount of instances to generate, asking all the inputs
         for fileNumber in range(k):
-            n = int(input("Enter the amount of objects for instance No." + str(fileNumber + 1) + ": "))
-            v_min = int(input("Enter the minimum value of the objects for instance No." + str(fileNumber + 1) + ": "))
-            v_max = int(input("Enter the maximum value of the objects for instance No." + str(fileNumber + 1) + ": "))
-            w_min = int(input("Enter the minimum weight of the objects for instance No." + str(fileNumber + 1) + ": "))
-            w_max = int(input("Enter the maximum weight of the objects for instance No." + str(fileNumber + 1) + ": "))
+            n = getInput(prompt="Enter the amount of objects for instance No." + str(fileNumber + 1) + ": ",
+                         cast=int,
+                         condition=lambda x: x > 0,
+                         errorMessage="The size of the instance must be greather than zero. Try again.")
+            v_min = getInput(prompt="Enter the minimum value of the objects for instance No." + str(fileNumber + 1) + ": ",
+                             cast=int,
+                             condition=lambda x: x > 0,
+                             errorMessage="The minimum value of the instance objects must be greather than zero. Try again.")
+            v_max = getInput(prompt="Enter the maximum value of the objects for instance No." + str(fileNumber + 1) + ": ",
+                             cast=int,
+                             condition=lambda x: x > v_min,
+                             errorMessage="The maximum value of the instance objects must be greather than minimum value. Try again.")
+            w_min = getInput(prompt="Enter the minimum weight of the objects for instance No." + str(fileNumber + 1) + ": ",
+                             cast=int,
+                             condition=lambda x: x > 0,
+                             errorMessage="The minimum weight of the instance objects must be greather than zero. Try again.")
+            w_max = getInput(prompt="Enter the maximum weight of the objects for instance No." + str(fileNumber + 1) + ": ",
+                             cast=int,
+                             condition=lambda x: x > w_min,
+                             errorMessage="The maximum weight of the instance objects must be greather than minimum weight. Try again.")
             W = int(((n * (w_max + w_min) / 2) * 0.3))
 
             # Method for create and write a txt file
@@ -26,7 +42,7 @@ def instanceGenerator(k):
                 instance.write(str(n) + " " + str(W) + "\n")
 
             # Loop for random numbers into the txt file
-                for rnd in range(1, n):
+                for rnd in range(0, n):
                     v_file = random.randint(v_min, v_max + 1)
                     w_file = random.randint(w_min, w_max + 1)
                     instance.write(str(v_file) + " " + str(w_file) + "\n")
@@ -40,7 +56,7 @@ def instanceGenerator(k):
 
 
 # Function for validate all the inputs in the RIG
-def getInput(prompt = "", cast = None, condition = None, errorMessage = None):
+def getInput(prompt="", cast=None, condition=None, errorMessage=None):
     while True:
         try:
             response = (cast or str)(input(prompt))
